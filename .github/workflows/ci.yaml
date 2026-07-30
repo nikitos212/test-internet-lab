@@ -44,8 +44,17 @@ jobs:
               run: |
                   php -S 127.0.0.1:8080 -t public public/index.php > /tmp/portfolio-server.log 2>&1 &
                   server_pid=$!
-                  trap 'kill "$server_pid"' EXIT
-                  curl --fail-with-body --retry 5 --retry-connrefused \
+                  cleanup() {
+                    kill "$server_pid" 2>/dev/null || true
+                    cat /tmp/portfolio-server.log
+                    if [ -f var/log/test.log ]; then
+                      cat var/log/test.log
+                    fi
+                  }
+                  trap cleanup EXIT
+                  curl --fail --silent --show-error --retry 5 --retry-connrefused \
+                    http://127.0.0.1:8080/api/health > /dev/null
+                  curl --fail-with-body --silent --show-error \
                     --request POST \
                     --header "Content-Type: application/json" \
                     --data '{"name":"Anna","phone":"+79991234567","email":"anna@example.com","comment":"Need backend API development for a new service"}' \
