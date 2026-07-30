@@ -22,7 +22,6 @@ final class Version20260730100000 extends AbstractMigration
         $this->addSql("ALTER TABLE contact ADD CONSTRAINT chk_contact_category CHECK (category IN ('project', 'job', 'partnership', 'other'))");
         $this->addSql("ALTER TABLE contact ADD CONSTRAINT chk_contact_sentiment CHECK (sentiment IN ('positive', 'neutral', 'negative'))");
         $this->addSql("ALTER TABLE contact ADD CONSTRAINT chk_contact_notification CHECK (notification_status IN ('pending', 'sent', 'partial', 'failed'))");
-        $this->addSql('COMMENT ON COLUMN contact.created_at IS \'(DC2Type:datetime_immutable)\'');
     }
 
     public function down(Schema $schema): void
