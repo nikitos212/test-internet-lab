@@ -2,11 +2,14 @@ databases:
     - name: portfolio-db
       databaseName: portfolio
       user: portfolio
+      plan: free
+      postgresMajorVersion: '16'
 
 services:
     - type: web
       name: portfolio-contact-api
       runtime: docker
+      plan: free
       healthCheckPath: /api/health
       envVars:
           - key: APP_ENV
@@ -29,6 +32,8 @@ services:
             value: gpt-5.6-luna
           - key: CORS_ALLOW_ORIGIN
             sync: false
+          - key: TRUSTED_PROXIES
+            value: REMOTE_ADDR
           - key: CONTACT_RATE_LIMIT
             value: 5
           - key: PORTFOLIO_NAME

@@ -7,6 +7,23 @@ on:
 jobs:
     quality:
         runs-on: ubuntu-latest
+        env:
+            APP_ENV: test
+            DATABASE_URL: postgresql://portfolio:portfolio@127.0.0.1:5432/portfolio_test?serverVersion=16&charset=utf8
+        services:
+            postgres:
+                image: postgres:16-alpine
+                env:
+                    POSTGRES_DB: portfolio_test
+                    POSTGRES_USER: portfolio
+                    POSTGRES_PASSWORD: portfolio
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd "pg_isready -U portfolio -d portfolio_test"
+                    --health-interval 5s
+                    --health-timeout 5s
+                    --health-retries 10
         steps:
             - uses: actions/checkout@v4
             - uses: shivammathur/setup-php@v2
@@ -19,4 +36,16 @@ jobs:
             - run: php bin/console lint:container
             - run: php bin/console lint:yaml config
             - run: php bin/console lint:twig templates
+            - run: php bin/console doctrine:migrations:migrate --no-interaction
+            - run: php bin/console doctrine:schema:validate
             - run: vendor/bin/phpunit
+            - name: Проверка HTTP-сценария
+              run: |
+                  php -S 127.0.0.1:8080 -t public public/index.php > /tmp/portfolio-server.log 2>&1 &
+                  server_pid=$!
+                  trap 'kill "$server_pid"' EXIT
+                  curl --fail-with-body --retry 5 --retry-connrefused \
+                    --request POST \
+                    --header "Content-Type: application/json" \
+                    --data '{"name":"Anna","phone":"+79991234567","email":"anna@example.com","comment":"Need backend API development for a new service"}' \
+                    http://127.0.0.1:8080/api/contact

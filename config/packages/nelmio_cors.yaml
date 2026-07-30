@@ -1,6 +1,7 @@
 nelmio_cors:
     defaults:
         allow_credentials: false
+        origin_regex: true
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
         allow_headers: ['Content-Type', 'Accept', 'X-Request-ID']
         expose_headers: ['X-Request-ID', 'X-RateLimit-Remaining', 'Retry-After']

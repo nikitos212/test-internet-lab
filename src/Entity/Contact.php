@@ -41,7 +41,7 @@ class Contact
     #[ORM\Column(length: 32)]
     private string $aiProvider;
 
-    #[ORM\Column(length: 16)]
+    #[ORM\Column(length: 16, options: ['default' => 'pending'])]
     private string $notificationStatus = 'pending';
 
     #[ORM\Column]

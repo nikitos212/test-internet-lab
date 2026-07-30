@@ -8,7 +8,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-COPY composer.json symfony.lock ./
+COPY composer.* symfony.lock ./
 RUN composer install --no-interaction --prefer-dist --no-scripts
 
 COPY . .

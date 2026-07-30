@@ -50,7 +50,7 @@ docker compose down -v
 composer install
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate --no-interaction
-php -S localhost:8080 -t public
+php -S localhost:8080 -t public public/index.php
 ```
 
 Перед запуском нужно создать `.env.local` и указать подключение к локальной базе и почтовому серверу.
@@ -73,7 +73,8 @@ OPENAI_API_KEY="sk-your-key"
 | `CONTACT_OWNER_EMAIL` | Получатель нового обращения | `owner@portfolio.local` |
 | `OPENAI_API_KEY` | Ключ OpenAI | пустое значение |
 | `OPENAI_MODEL` | Модель для анализа | `gpt-5.6-luna` |
-| `CORS_ALLOW_ORIGIN` | Разрешенные origin | localhost |
+| `CORS_ALLOW_ORIGIN` | Регулярное выражение разрешенных origin | localhost |
+| `TRUSTED_PROXIES` | Доверенные reverse proxy | `127.0.0.1` |
 | `CONTACT_RATE_LIMIT` | Запросов в минуту с одного IP | `5` |
 | `PORTFOLIO_NAME` | Имя на лендинге | `Михаил` |
 
@@ -318,6 +319,8 @@ CORS включен только для `/api`. Разрешенные origin з
 
 Credentials выключены, потому что API не использует cookie-аутентификацию.
 
+Для production нужно указать точное выражение, например `^https://portfolio\.example$`.
+
 ## Тесты и проверка качества
 
 ```bash
@@ -335,6 +338,8 @@ composer quality
 Тесты покрывают валидацию DTO, локальную классификацию, разбор структурированного ответа OpenAI и переключение на fallback.
 
 GitHub Actions запускает тот же набор проверок для push и pull request.
+
+Дополнительно CI поднимает PostgreSQL 16, применяет миграции, проверяет схему Doctrine и отправляет тестовый запрос в `POST /api/contact`.
 
 ## Деплой на Render
 

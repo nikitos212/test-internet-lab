@@ -21,8 +21,8 @@ class ContactNotificationSender
 
     public function send(Contact $contact): NotificationResult
     {
-        $ownerSent = $this->sendSafely(
-            (new TemplatedEmail())
+        $ownerSent = $this->createAndSendSafely(
+            fn (): TemplatedEmail => (new TemplatedEmail())
                 ->from(new Address($this->fromEmail, 'Portfolio'))
                 ->to($this->ownerEmail)
                 ->replyTo(new Address($contact->getEmail(), $contact->getName()))
@@ -34,8 +34,8 @@ class ContactNotificationSender
             $contact,
         );
 
-        $userSent = $this->sendSafely(
-            (new TemplatedEmail())
+        $userSent = $this->createAndSendSafely(
+            fn (): TemplatedEmail => (new TemplatedEmail())
                 ->from(new Address($this->fromEmail, 'Portfolio'))
                 ->to(new Address($contact->getEmail(), $contact->getName()))
                 ->subject('Ваше обращение получено')
@@ -49,10 +49,10 @@ class ContactNotificationSender
         return new NotificationResult($ownerSent, $userSent);
     }
 
-    private function sendSafely(TemplatedEmail $email, string $recipient, Contact $contact): bool
+    private function createAndSendSafely(\Closure $emailFactory, string $recipient, Contact $contact): bool
     {
         try {
-            $this->mailer->send($email);
+            $this->mailer->send($emailFactory());
 
             return true;
         } catch (\Throwable $exception) {
