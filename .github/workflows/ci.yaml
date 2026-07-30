@@ -42,14 +42,17 @@ jobs:
             - run: vendor/bin/phpunit
             - name: Проверка HTTP-сценария
               run: |
-                  php -S 127.0.0.1:8080 -t public public/index.php > /tmp/portfolio-server.log 2>&1 &
+                  APP_ENV=test APP_DEBUG=1 DATABASE_URL="$DATABASE_URL" \
+                    php -d variables_order=EGPCS -S 127.0.0.1:8080 -t public public/index.php > /tmp/portfolio-server.log 2>&1 &
                   server_pid=$!
                   cleanup() {
                     kill "$server_pid" 2>/dev/null || true
                     cat /tmp/portfolio-server.log
-                    if [ -f var/log/test.log ]; then
-                      cat var/log/test.log
-                    fi
+                    for log_file in var/log/*.log; do
+                      if [ -f "$log_file" ]; then
+                        cat "$log_file"
+                      fi
+                    done
                   }
                   trap cleanup EXIT
                   curl --fail --silent --show-error --retry 5 --retry-connrefused \
