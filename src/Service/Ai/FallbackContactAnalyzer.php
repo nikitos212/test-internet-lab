@@ -26,7 +26,7 @@ class FallbackContactAnalyzer implements AiAnalyzerInterface
     private function category(string $text): string
     {
         $groups = [
-            'job' => ['вакан', 'работ', 'резюме', 'позици', 'команд'],
+            'job' => ['вакан', 'предлагаем работу', 'ищем разработчика', 'резюме', 'трудоустрой', 'позици'],
             'partnership' => ['партнер', 'сотруднич', 'коллаб', 'совмест'],
             'project' => ['проект', 'сайт', 'api', 'сервис', 'разработ', 'интеграц', 'бюджет'],
         ];

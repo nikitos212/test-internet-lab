@@ -20,6 +20,7 @@ services:
         arguments:
             $apiKey: '%env(OPENAI_API_KEY)%'
             $model: '%env(OPENAI_MODEL)%'
+            $appSecret: '%env(APP_SECRET)%'
 
     App\Service\Ai\ResilientAiAnalyzer:
         arguments:

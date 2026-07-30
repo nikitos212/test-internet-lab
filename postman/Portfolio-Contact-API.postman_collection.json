@@ -1,0 +1,56 @@
+{
+    "info": {
+        "name": "Portfolio Contact API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8080"
+        }
+    ],
+    "item": [
+        {
+            "name": "Create contact",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Анна\",\n  \"phone\": \"+7 999 123-45-67\",\n  \"email\": \"anna@example.com\",\n  \"comment\": \"Нужна разработка API для нового сервиса\"\n}"
+                },
+                "url": "{{baseUrl}}/api/contact"
+            }
+        },
+        {
+            "name": "Health",
+            "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/health"
+            }
+        },
+        {
+            "name": "Metrics",
+            "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/metrics"
+            }
+        },
+        {
+            "name": "OpenAPI",
+            "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/api/docs.json"
+            }
+        }
+    ]
+}

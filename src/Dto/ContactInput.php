@@ -12,7 +12,7 @@ final readonly class ContactInput
         public string $name,
         #[Assert\NotBlank(message: 'Укажите телефон')]
         #[Assert\Length(max: 32, maxMessage: 'Телефон не должен быть длиннее 32 символов')]
-        #[Assert\Regex(pattern: '/^\+?[0-9\s()\-]{7,24}$/', message: 'Укажите телефон в корректном формате')]
+        #[Assert\Regex(pattern: '/^\+?(?=(?:\D*\d){7,15}\D*$)[0-9\s()\-]+$/', message: 'Укажите телефон в корректном формате')]
         public string $phone,
         #[Assert\NotBlank(message: 'Укажите email')]
         #[Assert\Email(message: 'Укажите корректный email')]

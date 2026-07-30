@@ -6,6 +6,7 @@ use App\Exception\ApiValidationException;
 use App\Exception\RateLimitExceededException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -42,6 +43,10 @@ class ApiExceptionSubscriber implements EventSubscriberInterface
             $title = 'Ошибка валидации';
             $detail = $exception->getMessage();
             $errors = $exception->getErrors();
+        } elseif ($exception instanceof JsonException) {
+            $status = JsonResponse::HTTP_BAD_REQUEST;
+            $title = 'Некорректный запрос';
+            $detail = 'Проверьте формат JSON';
         } elseif ($exception instanceof RateLimitExceededException) {
             $status = JsonResponse::HTTP_TOO_MANY_REQUESTS;
             $title = 'Лимит запросов исчерпан';
