@@ -53,7 +53,9 @@ jobs:
                   }
                   trap cleanup EXIT
                   curl --fail --silent --show-error --retry 5 --retry-connrefused \
-                    http://127.0.0.1:8080/api/health > /dev/null
+                    http://127.0.0.1:8080 > /dev/null
+                  curl --fail-with-body --silent --show-error \
+                    http://127.0.0.1:8080/api/health
                   curl --fail-with-body --silent --show-error \
                     --request POST \
                     --header "Content-Type: application/json" \
