@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<header class="site-header">
+    <a class="brand" href="#top" aria-label="На главную">
+        <span class="brand-mark">M</span>
+        <span>{{ portfolio_name }}</span>
+    </a>
+    <nav aria-label="Основная навигация">
+        <a href="#approach">Подход</a>
+        <a href="#stack">Стек</a>
+        <a href="/api/docs">API</a>
+    </nav>
+    <a class="header-action" href="#contact">Обсудить задачу</a>
+</header>
+
+<main id="top">
+    <section class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow"><span></span> PHP Backend Developer</p>
+            <h1>Сервисы, которым доверяют <em>после релиза</em></h1>
+            <p class="hero-lead">Проектирую понятные API, подключаю внешние системы и превращаю бизнес-логику в поддерживаемый Symfony-код.</p>
+            <div class="hero-actions">
+                <a class="button button-primary" href="#contact">Начать проект</a>
+                <a class="button button-ghost" href="/api/docs">Открыть документацию <span>↗</span></a>
+            </div>
+            <div class="hero-facts">
+                <div><strong>PHP 8.2+</strong><span>современный стек</span></div>
+                <div><strong>PostgreSQL</strong><span>надежные данные</span></div>
+                <div><strong>AI inside</strong><span>полезные сценарии</span></div>
+            </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Схема обработки обращения">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="signal-card signal-request">
+                <span class="signal-icon">01</span>
+                <div><small>Входящий запрос</small><strong>POST /api/contact</strong></div>
+                <i class="status-dot"></i>
+            </div>
+            <div class="core">
+                <span class="core-glow"></span>
+                <small>Symfony</small>
+                <strong>API</strong>
+                <span>7.4</span>
+            </div>
+            <div class="signal-card signal-ai">
+                <span class="signal-icon">AI</span>
+                <div><small>Анализ выполнен</small><strong>project · positive</strong></div>
+            </div>
+            <div class="signal-card signal-db">
+                <span class="signal-icon">DB</span>
+                <div><small>Сохранено</small><strong>PostgreSQL</strong></div>
+            </div>
+            <div class="terminal-card">
+                <div class="terminal-head"><span></span><span></span><span></span><small>request.log</small></div>
+                <code><b>201</b> contact.created</code>
+                <code><i>↳</i> ai.provider openai</code>
+                <code><i>↳</i> mail.status sent</code>
+            </div>
+        </div>
+    </section>
+
+    <section class="marquee" aria-label="Технологии">
+        <div>
+            <span>Symfony</span><i>✦</i><span>REST API</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>OpenAI</span><i>✦</i><span>Docker</span><i>✦</i><span>PHPUnit</span>
+        </div>
+    </section>
+
+    <section class="approach section" id="approach">
+        <div class="section-heading">
+            <p class="eyebrow"><span></span> Как я работаю</p>
+            <h2>Сложное внутри.<br><em>Понятное снаружи.</em></h2>
+            <p>Каждое решение можно объяснить, проверить и развивать без переписывания проекта целиком.</p>
+        </div>
+        <div class="approach-grid">
+            <article>
+                <span>01</span>
+                <div class="article-icon">{ }</div>
+                <h3>Ясный контракт</h3>
+                <p>Предсказуемые REST-эндпоинты, строгая валидация и единый формат ошибок.</p>
+            </article>
+            <article class="featured">
+                <span>02</span>
+                <div class="article-icon">◎</div>
+                <h3>Устойчивый сценарий</h3>
+                <p>Сбой внешнего AI не останавливает прием обращения. Сервис использует локальный fallback.</p>
+            </article>
+            <article>
+                <span>03</span>
+                <div class="article-icon">↗</div>
+                <h3>Наблюдаемость</h3>
+                <p>Структурные логи, request ID, health check и метрики показывают состояние приложения.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="stack section" id="stack">
+        <div class="stack-panel">
+            <div>
+                <p class="eyebrow light"><span></span> Рабочий стек</p>
+                <h2>Инструменты под задачу, а не ради списка</h2>
+            </div>
+            <div class="stack-list">
+                <span>PHP 8.2</span>
+                <span>Symfony 7.4</span>
+                <span>Doctrine ORM</span>
+                <span>PostgreSQL 16</span>
+                <span>OpenAI Responses API</span>
+                <span>Symfony Mailer</span>
+                <span>Rate Limiter</span>
+                <span>OpenAPI</span>
+                <span>Docker</span>
+                <span>PHPUnit</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact section" id="contact">
+        <div class="contact-copy">
+            <p class="eyebrow"><span></span> Новый проект</p>
+            <h2>Расскажите, что нужно <em>запустить</em></h2>
+            <p>Форма отправляет данные в реальный API. Обращение пройдет валидацию, AI-анализ, сохранится в PostgreSQL и отправит два уведомления.</p>
+            <div class="contact-note">
+                <span>↳</span>
+                <p>Обычно отвечаю в течение одного рабочего дня</p>
+            </div>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-row">
+                <label>
+                    <span>Ваше имя</span>
+                    <input name="name" type="text" autocomplete="name" maxlength="80" placeholder="Анна" required>
+                    <small data-error="name"></small>
+                </label>
+                <label>
+                    <span>Телефон</span>
+                    <input name="phone" type="tel" autocomplete="tel" maxlength="32" placeholder="+7 999 123-45-67" required>
+                    <small data-error="phone"></small>
+                </label>
+            </div>
+            <label>
+                <span>Email</span>
+                <input name="email" type="email" autocomplete="email" maxlength="180" placeholder="anna@example.com" required>
+                <small data-error="email"></small>
+            </label>
+            <label>
+                <span>Задача</span>
+                <textarea name="comment" rows="5" maxlength="2000" placeholder="Нужно разработать API для нового продукта..." required></textarea>
+                <small data-error="comment"></small>
+            </label>
+            <button class="button button-primary submit-button" type="submit">
+                <span>Отправить обращение</span>
+                <i>↗</i>
+            </button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <a class="brand" href="#top"><span class="brand-mark">M</span><span>{{ portfolio_name }}</span></a>
+    <p>Backend with a clear purpose</p>
+    <div><a href="/api/docs">OpenAPI</a><a href="/api/health">Health</a><span>© {{ 'now'|date('Y') }}</span></div>
+</footer>
+{% endblock %}

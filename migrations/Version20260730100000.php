@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+final class Version20260730100000 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return 'Create contacts table';
+    }
+
+    public function up(Schema $schema): void
+    {
+        $this->addSql('CREATE TABLE contact (id SERIAL NOT NULL, name VARCHAR(80) NOT NULL, phone VARCHAR(32) NOT NULL, email VARCHAR(180) NOT NULL, comment TEXT NOT NULL, category VARCHAR(24) NOT NULL, sentiment VARCHAR(16) NOT NULL, generated_reply TEXT NOT NULL, ai_provider VARCHAR(32) NOT NULL, notification_status VARCHAR(16) DEFAULT \'pending\' NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX idx_contact_created_at ON contact (created_at)');
+        $this->addSql('CREATE INDEX idx_contact_category ON contact (category)');
+        $this->addSql("ALTER TABLE contact ADD CONSTRAINT chk_contact_category CHECK (category IN ('project', 'job', 'partnership', 'other'))");
+        $this->addSql("ALTER TABLE contact ADD CONSTRAINT chk_contact_sentiment CHECK (sentiment IN ('positive', 'neutral', 'negative'))");
+        $this->addSql("ALTER TABLE contact ADD CONSTRAINT chk_contact_notification CHECK (notification_status IN ('pending', 'sent', 'partial', 'failed'))");
+        $this->addSql('COMMENT ON COLUMN contact.created_at IS \'(DC2Type:datetime_immutable)\'');
+    }
+
+    public function down(Schema $schema): void
+    {
+        $this->addSql('DROP TABLE contact');
+    }
+}

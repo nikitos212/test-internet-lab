@@ -1,0 +1,40 @@
+parameters:
+    app.portfolio_name: '%env(PORTFOLIO_NAME)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Service\Ai\AiAnalyzerInterface:
+        alias: App\Service\Ai\ResilientAiAnalyzer
+
+    App\Service\Ai\OpenAiContactAnalyzer:
+        arguments:
+            $apiKey: '%env(OPENAI_API_KEY)%'
+            $model: '%env(OPENAI_MODEL)%'
+
+    App\Service\Ai\ResilientAiAnalyzer:
+        arguments:
+            $primary: '@App\Service\Ai\OpenAiContactAnalyzer'
+            $fallback: '@App\Service\Ai\FallbackContactAnalyzer'
+
+    App\Service\ContactNotificationSender:
+        arguments:
+            $ownerEmail: '%env(CONTACT_OWNER_EMAIL)%'
+            $fromEmail: '%env(MAIL_FROM_EMAIL)%'
+
+    App\Controller\HealthController:
+        arguments:
+            $openAiApiKey: '%env(OPENAI_API_KEY)%'
+
+    App\Controller\HomeController:
+        arguments:
+            $portfolioName: '%app.portfolio_name%'

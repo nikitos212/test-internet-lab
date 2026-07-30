@@ -1,0 +1,28 @@
+monolog:
+    channels: ['api']
+    handlers:
+        api:
+            type: stream
+            path: '%kernel.logs_dir%/api.log'
+            level: info
+            channels: ['api']
+            formatter: monolog.formatter.json
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+            excluded_http_codes: [404, 405]
+            channels: ['!api']
+        nested:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+            formatter: monolog.formatter.json
+
+when@test:
+    monolog:
+        handlers:
+            main:
+                type: null
+            api:
+                type: null

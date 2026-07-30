@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="ru">
+<body style="font-family:Arial,sans-serif;color:#171a1f;line-height:1.6">
+<h1 style="font-size:24px">Новое обращение №{{ contact.id }}</h1>
+<p><strong>Имя</strong> {{ contact.name }}</p>
+<p><strong>Телефон</strong> {{ contact.phone }}</p>
+<p><strong>Email</strong> {{ contact.email }}</p>
+<p><strong>Категория</strong> {{ contact.category }}</p>
+<p><strong>Тональность</strong> {{ contact.sentiment }}</p>
+<p><strong>Комментарий</strong></p>
+<p>{{ contact.comment|nl2br }}</p>
+</body>
+</html>

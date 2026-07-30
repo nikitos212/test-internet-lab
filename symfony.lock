@@ -1,0 +1,41 @@
+{
+    "doctrine/doctrine-bundle": {
+        "version": "2.14"
+    },
+    "doctrine/doctrine-migrations-bundle": {
+        "version": "3.4"
+    },
+    "nelmio/api-doc-bundle": {
+        "version": "5.7"
+    },
+    "nelmio/cors-bundle": {
+        "version": "2.5"
+    },
+    "symfony/console": {
+        "version": "7.4"
+    },
+    "symfony/flex": {
+        "version": "2.7"
+    },
+    "symfony/framework-bundle": {
+        "version": "7.4"
+    },
+    "symfony/mailer": {
+        "version": "7.4"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.10"
+    },
+    "symfony/rate-limiter": {
+        "version": "7.4"
+    },
+    "symfony/runtime": {
+        "version": "7.4"
+    },
+    "symfony/twig-bundle": {
+        "version": "7.4"
+    },
+    "symfony/validator": {
+        "version": "7.4"
+    }
+}
