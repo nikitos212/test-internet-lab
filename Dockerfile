@@ -3,6 +3,7 @@ FROM composer:2 AS composer
 FROM dunglas/frankenphp:1-php8.3-alpine
 
 RUN install-php-extensions pdo_pgsql mbstring intl zip opcache
+RUN setcap -r /usr/local/bin/frankenphp
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
