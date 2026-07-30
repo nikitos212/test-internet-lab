@@ -9,10 +9,10 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 COPY composer.* symfony.lock ./
-RUN composer install --no-interaction --prefer-dist --no-scripts
+RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts --optimize-autoloader
 
 COPY . .
-RUN composer dump-autoload --classmap-authoritative \
+RUN composer dump-autoload --no-dev --classmap-authoritative \
     && APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear \
     && chmod +x docker/entrypoint.sh
 

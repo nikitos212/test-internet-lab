@@ -40,6 +40,8 @@ jobs:
             - run: php bin/console doctrine:schema:update --dump-sql
             - run: php bin/console doctrine:schema:validate
             - run: vendor/bin/phpunit
+            - name: Проверка production Docker-образа
+              run: docker build --tag portfolio-contact-api:ci .
             - name: Проверка HTTP-сценария
               run: |
                   APP_ENV=test APP_DEBUG=1 DATABASE_URL="$DATABASE_URL" \

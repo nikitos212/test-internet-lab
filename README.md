@@ -343,17 +343,36 @@ GitHub Actions запускает тот же набор проверок для
 
 ## Деплой на Render
 
-В репозитории есть `render.yaml`.
+Репозиторий содержит `render.yaml`, поэтому приложение и PostgreSQL создаются одним Blueprint.
 
 Порядок:
 
-1. Загрузить проект в GitHub.
-2. В Render создать Blueprint из репозитория.
-3. Заполнить `MAILER_DSN`, `MAIL_FROM_EMAIL`, `CONTACT_OWNER_EMAIL`, `OPENAI_API_KEY` и `CORS_ALLOW_ORIGIN`.
-4. Запустить deploy.
-5. Проверить `/api/health` и `/api/docs`.
+1. Открыть Render Dashboard.
+2. Нажать `New`, затем `Blueprint`.
+3. Подключить репозиторий `https://github.com/nikitos212/test-internet-lab`.
+4. Выбрать ветку `main` и файл `render.yaml` в корне репозитория.
+5. Проверить, что Render создаст `portfolio-contact-api` и `portfolio-db`.
+6. Заполнить запрошенные переменные.
 
-Render создаст PostgreSQL и передаст `DATABASE_URL`. Контейнер выполнит миграцию при старте.
+| Переменная | Что указать |
+|---|---|
+| `MAILER_DSN` | SMTP DSN почтового сервиса, например `smtp://LOGIN:PASSWORD@smtp.example.com:587?encryption=tls` |
+| `MAIL_FROM_EMAIL` | Подтвержденный у почтового сервиса адрес отправителя |
+| `CONTACT_OWNER_EMAIL` | Email владельца портфолио, куда приходят новые обращения |
+| `OPENAI_API_KEY` | API key OpenAI в формате `sk-...` |
+| `CORS_ALLOW_ORIGIN` | Точный адрес сайта в формате regex, например `^https://portfolio\.example$` |
+
+Специальные символы в логине и пароле `MAILER_DSN` нужно кодировать как URL. `APP_SECRET` генерируется автоматически. `DATABASE_URL` берется из созданной PostgreSQL, вручную эти переменные заполнять не нужно.
+
+После заполнения нужно нажать `Deploy Blueprint`. Контейнер соберется из `Dockerfile`, при старте применит миграции и запустит FrankenPHP.
+
+После успешного deploy нужно открыть:
+
+- `/` для проверки лендинга
+- `/api/health` для проверки PostgreSQL и режима AI
+- `/api/docs` для Swagger UI
+
+Затем следует отправить одно тестовое обращение через форму. В ответе `notifications.status` должно быть `sent`, письмо должно прийти владельцу и пользователю. Если `checks.ai` в health check имеет значение `fallback`, нужно проверить `OPENAI_API_KEY`.
 
 Для production SMTP можно использовать Resend, Mailgun, Postmark или другой сервис с SMTP-доступом.
 
