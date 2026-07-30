@@ -4,6 +4,14 @@ Backend-сервис для лендинга PHP-разработчика. Пр�
 
 В проект также входит адаптивный лендинг, OpenAPI, health check, метрики, Postman-коллекция и Docker-окружение.
 
+## Рабочий проект
+
+- [Лендинг](https://portfolio-contact-api-g2c0.onrender.com)
+- [Swagger UI](https://portfolio-contact-api-g2c0.onrender.com/api/docs)
+- [Health check](https://portfolio-contact-api-g2c0.onrender.com/api/health)
+
+После периода бездействия первый запуск может занять до минуты. (Бесплатный тариф хостинга)
+
 ## Быстрый запуск
 
 Понадобятся Docker и Docker Compose.
