@@ -1,10 +1,11 @@
 {
-    auto_https off
-    frankenphp
+	auto_https off
+	admin off
+	frankenphp
 }
 
 :{$PORT:8080} {
-    root * /app/public
-    encode zstd br gzip
-    php_server
+	root * /app/public
+	encode zstd br gzip
+	php_server
 }
