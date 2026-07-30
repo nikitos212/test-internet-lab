@@ -18,11 +18,3 @@ monolog:
             path: '%kernel.logs_dir%/%kernel.environment%.log'
             level: debug
             formatter: monolog.formatter.json
-
-when@test:
-    monolog:
-        handlers:
-            main:
-                type: null
-            api:
-                type: null
